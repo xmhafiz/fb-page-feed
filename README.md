@@ -7,7 +7,7 @@ It is simple wrapper class written in php to fetch posts from certain Facebook p
 ## Installation
 
 ### Step 1: Getting Facebook App
-- Go to [Facebook developer] (https://developers.facebook.com/apps/) website
+- Go to [Facebook developer](https://developers.facebook.com/apps/) website
 - Click "Add a New App" and fill in details
 - On your **Dashboard**, get the "App ID" and "App Secret"
 - Yeah, you are ready to code
