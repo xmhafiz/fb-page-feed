@@ -28,7 +28,7 @@ class Request {
                     'access_token' => $accessToken,
                     'limit' => $maxPost,
                     // fields that we intended to get
-                    'fields' => 'id,message,created_time,permalink_url,full_picture',
+                    'fields' => 'id,message,created_time,from,permalink_url,full_picture',
                 ]
             ]);
             $json = $response->getBody();
