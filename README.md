@@ -6,21 +6,21 @@ It is simple wrapper class written in php to fetch posts from certain Facebook p
 
 ## Installation
 
-### Step 1: Getting Facebook App
+#### Step 1: Getting Facebook App
 - Go to [Facebook developer](https://developers.facebook.com/apps/) website
 - Click "Add a New App" and fill in details
 - On your **Dashboard**, get the "App ID" and "App Secret"
 - Yeah, you are ready to code
 
-### Step 2: Install from composer
+#### Step 2: Install from composer
 ```
-composer require yohafiz/fb-page-feed:1.0.0
+composer require yohafiz/fb-page-feed:dev-master
 ```
 Alternatively, you can specify as a dependency in your project's existing composer.json file
 ```
 {
    "require": {
-      "yohafiz/fb-page-feed": "1.0.0"
+      "yohafiz/fb-page-feed": "dev-master"
    }
 }
 ```
@@ -28,12 +28,12 @@ Alternatively, you can specify as a dependency in your project's existing compos
 ## Usage
 After installing, you need to require Composer's autoloader and add your code.
 
-### Default (maximum post is 20)
+#### Default (maximum post is 20)
 ```php
 $data = FbFeed\Request::getPageFeed($pageId, $fbSecretKey, $fbAppId);
 ```
 
-### Custom Maximum Post Shown
+#### Custom Maximum Post Shown
 ```php
 // only show 5 post maximum
 $data = FbFeed\Request::getPageFeed($pageId, $fbSecretKey, $fbAppId, 5);
@@ -95,6 +95,10 @@ Then, you should getting data similarly like below:
     }
 ]
 ```
+
+## Todo
+- Adding Tests
+- flexible query fields
 
 ## License
 Licensed under the [MIT license](http://opensource.org/licenses/MIT)
