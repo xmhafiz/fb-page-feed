@@ -1,5 +1,13 @@
 {
+    "name": "yohafiz/fb-page-feed",
+    "description": "Simple request to get any Facebook Page posts",
+    "keywords": ["php", "facebook"],
+    "license": "MIT",
+    "type": "project",
     "require": {
        "guzzlehttp/guzzle": "~6.0"
+    },
+    "autoload": {
+        "psr-4": {"Yohafiz\\FbFeed": "src/"}
     }
 }
