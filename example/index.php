@@ -8,10 +8,10 @@
 
 require_once __DIR__ .'/../vendor/autoload.php';
 
-use Yohafiz\FbFeed;
+use Xmhafiz\FbFeed;
 
-$fbSecretKey =  '580c7xxxxx';
-$fbAppId = '23776xxxxxxx';
+$fbSecretKey =  '580c7f49eed4aec66003b96ea03ea495';
+$fbAppId = '237762316698462';
 $pageId ='LaravelCommunity';
 
 $data = FbFeed\Request::getPageFeed($pageId, $fbSecretKey, $fbAppId);

@@ -4,7 +4,7 @@
  *
  * @author hafiz
  */
-namespace Yohafiz\FbFeed;
+namespace Xmhafiz\FbFeed;
 
 use GuzzleHttp\Client;
 

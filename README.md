@@ -14,13 +14,13 @@ It is simple wrapper class written in php to fetch posts from certain Facebook p
 
 #### Step 2: Install from composer
 ```
-composer require yohafiz/fb-page-feed:dev-master
+composer require xmhafiz/fb-page-feed:dev-master
 ```
 Alternatively, you can specify as a dependency in your project's existing composer.json file
 ```
 {
    "require": {
-      "yohafiz/fb-page-feed": "dev-master"
+      "xmhafiz/fb-page-feed": "dev-master"
    }
 }
 ```
@@ -47,7 +47,7 @@ $data = FbFeed\Request::getPageFeed($pageId, $fbSecretKey, $fbAppId, 5);
 
 require_once 'vendor/autoload.php';
 
-use Yohafiz\FbFeed;
+use Xmhafiz\FbFeed;
 
 $fbSecretKey='580c7...';
 $fbAppId='237...';
