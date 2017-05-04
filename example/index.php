@@ -8,13 +8,13 @@
 
 require_once __DIR__ .'/../vendor/autoload.php';
 
-use Xmhafiz\FbFeed;
+use Xmhafiz\FbFeed\Request;
 
-$fbSecretKey =  '580c7f49eed4aec66003b96ea03ea495';
-$fbAppId = '237762316698462';
-$pageId ='LaravelCommunity';
+$fbSecretKey =  '';
+$fbAppId = '';
+$pageId = '';
 
-$data = FbFeed\Request::getPageFeed($pageId, $fbSecretKey, $fbAppId);
+$data = Request::getPageFeed($pageId, $fbSecretKey, $fbAppId);
 
 header('Content-type: application/json');
 echo json_encode($data);
