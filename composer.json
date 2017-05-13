@@ -15,7 +15,12 @@
        "php": ">=5.5",
        "guzzlehttp/guzzle": "~6.0"
     },
+    "require-dev": {
+        "vlucas/phpdotenv": "~2.2"
+    },
     "autoload": {
-        "psr-4": {"Xmhafiz\\FbFeed\\": "src/"}
+        "psr-4": {
+            "Xmhafiz\\FbFeed\\": "src/"
+        }
     }
 }

@@ -10,14 +10,14 @@ use GuzzleHttp\Client;
 
 class Request {
 
-    static function getPageFeed($pageId, $fbSecretKey, $fbAppId, $maxPost = 20) {
+    static function getPageFeed($fbPageName, $fbSecretKey, $fbAppId, $maxPost = 20) {
         $client = new Client();
 
         // this is how to construct access token using secret key and app id
         $accessToken = $fbAppId . '|' . $fbSecretKey;
 
         // make request as stated in https://developers.facebook.com/docs/graph-api/using-graph-api
-        $url = 'https://graph.facebook.com/' . $pageId . '/feed';
+        $url = 'https://graph.facebook.com/' . $fbPageName . '/feed';
 
         // error handler when status code not 200
         try {

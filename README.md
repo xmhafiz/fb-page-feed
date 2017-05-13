@@ -30,13 +30,13 @@ After installing, you need to require Composer's autoloader and add your code.
 
 #### Default (maximum post is 20)
 ```php
-$data = Request::getPageFeed($pageId, $fbSecretKey, $fbAppId);
+$data = Request::getPageFeed($pageName, $fbSecretKey, $fbAppId);
 ```
 
 #### Custom Maximum Post Shown
 ```php
 // only show 5 post maximum
-$data = Request::getPageFeed($pageId, $fbSecretKey, $fbAppId, 5);
+$data = Request::getPageFeed($pageName, $fbSecretKey, $fbAppId, 5);
 ```
 
 
@@ -51,9 +51,9 @@ use Xmhafiz\FbFeed\Request;
 
 $fbSecretKey='580c7...';
 $fbAppId='237...';
-$pageId='LaravelCommunity';
+$pageName='LaravelCommunity';
 
-$data = Request::getPageFeed($pageId, $fbSecretKey, $fbAppId);
+$data = Request::getPageFeed($pageName, $fbSecretKey, $fbAppId);
 
 header('Content-type: application/json');
 echo json_encode($data);
