@@ -18,13 +18,13 @@ Tested in PHP 5.6, 7.0 and 7.1
 
 #### Step 2: Install from composer
 ```
-composer require xmhafiz/fb-page-feed:dev-master
+composer require xmhafiz/fb-page-feed
 ```
 Alternatively, you can specify as a dependency in your project's existing composer.json file
 ```
 {
    "require": {
-      "xmhafiz/fb-page-feed": "dev-master"
+      "xmhafiz/fb-page-feed": "^1.0"
    }
 }
 ```
