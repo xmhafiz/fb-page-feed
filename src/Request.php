@@ -40,13 +40,17 @@ class Request {
                 // reformat data
                 $feeds = $dataArray['data'];
 
-                return $feeds;
+                return [
+                    'error' => false,
+                    'status_code' => 200,
+                    'data' => $feeds
+                ];
             }
             else {
                 return [
                     'error' => true,
                     'status_code' => $response->getStatusCode(),
-                    'message' => nil
+                    'message' => 'Unexpecetd error occurred'
                 ];
             }
 

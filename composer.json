@@ -16,7 +16,8 @@
        "guzzlehttp/guzzle": "~6.0"
     },
     "require-dev": {
-        "vlucas/phpdotenv": "~2.2"
+        "vlucas/phpdotenv": "~2.2",
+        "phpunit/phpunit": "~5.7"
     },
     "autoload": {
         "psr-4": {
