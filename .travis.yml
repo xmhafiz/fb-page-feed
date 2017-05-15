@@ -7,5 +7,5 @@ php:
   - hhvm
   - nightly
 
-  before_script:
+before_script:
   - composer install
