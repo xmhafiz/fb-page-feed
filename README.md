@@ -1,7 +1,7 @@
 # Fb Page Feed
 It is simple wrapper class written in php to fetch posts from certain Facebook page.
 
-Currently I am using [Facebook graph API](https://developers.facebook.com/docs/graph-api) with cool [guzzle](https://github.com/guzzle/guzzle) and (dotenv)[https://github.com/vlucas/phpdotenv]
+Currently I am using [Facebook graph API](https://developers.facebook.com/docs/graph-api) with cool [guzzle](https://github.com/guzzle/guzzle) and [dotenv](https://github.com/vlucas/phpdotenv)
 ## Requirement
 - PHP 5.5++
 
@@ -39,7 +39,6 @@ $data = Request::getPageFeed($pageName, $fbSecretKey, $fbAppId);
 // only show 5 post maximum
 $data = Request::getPageFeed($pageName, $fbSecretKey, $fbAppId, 5);
 ```
-
 
 
 ## Code Example
@@ -104,8 +103,7 @@ Then, you should getting data similarly like below:
 
 ## To use with **dotenv** 
 - Look at [example code](https://github.com/xmhafiz/fb-page-feed/blob/master/example/index.php)
-- copy the `env.example` file to `env` and make sure fill all the required environment variable
-- detail usage please refer
+- copy the `env.example` file to `.env` and make sure fill all the required environment variable
 
 ## Todo
 - flexible query fields
