@@ -29,11 +29,20 @@ class RequestTest extends TestCase
 
 	function testGetPageFeedSuccess() 
 	{
-
+		// check default feed request
 		$response = Request::getPageFeed($this->fbPageName, $this->fbSecretKey, $this->fbAppId);
 
 	    $this->assertFalse($response['error']);
 	    $this->assertEquals(200, $response['status_code']);
+	}
+
+	function testGetPageFeedLimitFivePost() 
+	{
+		// feed request with maximum 5 post
+		$response = Request::getPageFeed($this->fbPageName, $this->fbSecretKey, $this->fbAppId, 5);
+
+	    $this->assertFalse($response['error']);
+	    $this->assertEquals(5, count($response['data']));
 	}
 
 	function testGetPageFeedEmptyPageNameFailed() 
