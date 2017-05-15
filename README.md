@@ -1,4 +1,4 @@
-# Fb Page Feed
+# Get Facebook Page Feed [![Build Status](https://travis-ci.org/xmhafiz/fb-page-feed.svg?branch=master)](https://travis-ci.org/xmhafiz/fb-page-feed)
 It is simple wrapper class written in php to fetch posts from certain Facebook page.
 
 Currently I am using [Facebook graph API](https://developers.facebook.com/docs/graph-api) with cool [guzzle](https://github.com/guzzle/guzzle) and [dotenv](https://github.com/vlucas/phpdotenv)
