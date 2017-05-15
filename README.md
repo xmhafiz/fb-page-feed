@@ -1,8 +1,9 @@
 # Fb Page Feed
 It is simple wrapper class written in php to fetch posts from certain Facebook page.
 
+Currently I am using [Facebook graph API](https://developers.facebook.com/docs/graph-api) with cool [guzzle](https://github.com/guzzle/guzzle) and (dotenv)[https://github.com/vlucas/phpdotenv]
 ## Requirement
-- PHP 5.5 and above
+- PHP 5.5++
 
 ## Installation
 
@@ -42,6 +43,7 @@ $data = Request::getPageFeed($pageName, $fbSecretKey, $fbAppId, 5);
 
 
 ## Code Example
+
 ```php
 <?php
 
@@ -51,9 +53,9 @@ use Xmhafiz\FbFeed\Request;
 
 $fbSecretKey='580c7...';
 $fbAppId='237...';
-$pageName='LaravelCommunity';
+$fbPageName='LaravelCommunity';
 
-$data = Request::getPageFeed($pageName, $fbSecretKey, $fbAppId);
+$data = Request::getPageFeed($fbPageName, $fbSecretKey, $fbAppId);
 
 header('Content-type: application/json');
 echo json_encode($data);
@@ -61,43 +63,51 @@ echo json_encode($data);
 
 Then, you should getting data similarly like below:
 ```json
-[
-    {
-        "id": "365155643537871_10210239095868608",
-        "message": "HOSTING LARAVEL\nIt offers web hosting for your projects in Laravel Framework all versions (4.x up to 5.4), we have support for PHP versions 5.3, 5.4, 5.5, 5.6, 7.0 and 7.1, up to 20 times faster thanks to the storage technology SSD.\n",
-        "created_time": "2017-03-25T04:25:19+0000",
-        "from": {
-            "name": "Percy Ivan Miranda Moreano",
-            "id": "10210243926669375"
+{
+    "error": false,
+    "status_code": 200,
+    "data": [
+        {
+            "id": "365155643537871_1321961834523909",
+            "message": "The APPDATA or COMPOSER_HOME environment variable must be set for composer to run correctly\"\nwhat bug?",
+            "created_time": "2017-05-14T15:45:30+0000",
+            "from": {
+                "name": "Phạm Nam",
+                "id": "424522607913714"
+            },
+            "permalink_url": "https://www.facebook.com/LaravelCommunity/posts/1321961834523909"
         },
-        "permalink_url": "https://www.facebook.com/LaravelCommunity/posts/10210239095868608",
-        "full_picture": "https://external.xx.fbcdn.net/safe_image.php?d=AQD.."
-    },
-    {
-        "id": "365155643537871_1268903959829697",
-        "message": "i want to store the dropdown value in a variable, when selecting the value from dropdown list",
-        "created_time": "2017-03-23T09:09:40+0000",
-        "from": {
-            "name": "Kumar Gundla",
-            "id": "161803951007026"
+        {
+            "id": "365155643537871_1766722286972894",
+            "message": "https://www.youtube.com/channel/UCQ6fynaWa81JqPzOBMmBTSw\nLaravel BAsic To Advance LEarning Step by STep",
+            "created_time": "2017-05-13T07:18:53+0000",
+            "from": {
+                "name": "Wasiim Khan",
+                "id": "1766622610316195"
+            },
+            "permalink_url": "https://www.facebook.com/photo.php?fbid=1766722286972894&set=o.365155643537871&type=3",
+            "full_picture": "https://scontent.xx.fbcdn.net/v/t1.0-9/18403359_1766722286972894_2242179936023685636_n.jpg?oh=679c3e230ef55759ebe0e42239318e27&oe=597B1F7D"
         },
-        "permalink_url": "https://www.facebook.com/LaravelCommunity/posts/1268903959829697"
-    },
-    {
-        "id": "365155643537871_1268883043165122",
-        "message": "Hello, I am looking for some help. I started to use Laravel and it is time to share it over my LAN. Struggling with it and need some advice if it is a virtualbox issue or more like vagrant setting on VM. thx",
-        "created_time": "2017-03-23T08:29:53+0000",
-        "from": {
-            "name": "Konrad Tuszkowski",
-            "id": "1257271121025042"
-        },
-        "permalink_url": "https://www.facebook.com/LaravelCommunity/posts/1268883043165122"
-    }
-]
+        {
+            "id": "365155643537871_1320698884650204",
+            "message": "ai cho em hou noi nay bi sao vay.\nIntegrity constraint violation: 1048 Column 'order' cannot be null",
+            "created_time": "2017-05-13T05:05:27+0000",
+            "from": {
+                "name": "Trong Phạm Sr.",
+                "id": "891899864284241"
+            },
+            "permalink_url": "https://www.facebook.com/LaravelCommunity/posts/1320698884650204"
+        }
+    ]
+}
 ```
 
+## To use with **dotenv** 
+- Look at [example code](https://github.com/xmhafiz/fb-page-feed/blob/master/example/index.php)
+- copy the `env.example` file to `env` and make sure fill all the required environment variable
+- detail usage please refer
+
 ## Todo
-- Adding Tests
 - flexible query fields
 
 ## License

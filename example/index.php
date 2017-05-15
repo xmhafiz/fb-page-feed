@@ -27,4 +27,3 @@ $response = Request::getPageFeed($fbPageName, $fbSecretKey, $fbAppId);
 header('Content-type: application/json');
 echo json_encode($response);
         
-        
