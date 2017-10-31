@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit colors="true">
-    <testsuites>
-        <testsuite name="Functional Test Suite">
-            <directory>./tests/</directory>
-        </testsuite>
-    </testsuites>
+	<testsuites>
+		<testsuite name="Functional Test Suite">
+			<directory>./tests/</directory>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">./tests/</directory>
+		</whitelist>
+		<blacklist>
+			<directory suffix=".php">./vendor</directory>
+		</blacklist>
+	</filter>
 </phpunit>
