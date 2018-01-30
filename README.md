@@ -1,7 +1,7 @@
 # Get Facebook Page Feed 
 
-[![Build Status](https://travis-ci.org/afiqiqmal/fb-page-feed.svg?branch=master)](https://travis-ci.org/afiqiqmal/fb-page-feed)
-[![Coverage](https://img.shields.io/codecov/c/github/afiqiqmal/fb-page-feed.svg)](https://codecov.io/gh/afiqiqmal/fb-page-feed)
+[![Build Status](https://travis-ci.org/xmhafiz/fb-page-feed.svg?branch=master)](https://travis-ci.org/xmhafiz/fb-page-feed)
+[![Coverage](https://img.shields.io/codecov/c/github/xmhafiz/fb-page-feed.svg)](https://codecov.io/gh/xmhafiz/fb-page-feed)
 
 It is simple wrapper class written in php to fetch posts from certain Facebook page.
 
@@ -39,12 +39,40 @@ After installing, you need to require Composer's autoloader and add your code.
 #### Default (maximum post is 20)
 ```php
 $data = Request::getPageFeed($pageName, $fbSecretKey, $fbAppId);
+$data = fb_feed()->setAppId($fbAppId)
+        ->setSecretKey($fbSecretKey)
+        ->setPage($fbPageName)
+        ->fetch();
 ```
 
 #### Custom Maximum Post Shown
 ```php
 // only show 5 post maximum
-$data = Request::getPageFeed($pageName, $fbSecretKey, $fbAppId, 5);
+$data = fb_feed()->setAppId($fbAppId)
+        ->setSecretKey($fbSecretKey)
+        ->setPage($fbPageName)
+        ->feedLimit(5)
+        ->fetch();
+```
+
+#### Filter By Keyword
+```php
+// only show 5 post maximum
+$data = fb_feed()->setAppId($fbAppId)
+        ->setSecretKey($fbSecretKey)
+        ->setPage($fbPageName)
+        ->findKeyword("#JomPay")
+        ->fetch();
+```
+
+#### Change Request Field
+```php
+// only show 5 post maximum
+$data = fb_feed()->setAppId($fbAppId)
+        ->setSecretKey($fbSecretKey)
+        ->setPage($fbPageName)
+        ->fields("id,message") //default 'id,message,created_time'
+        ->fetch();
 ```
 
 
@@ -61,10 +89,11 @@ $fbSecretKey='580c7...';
 $fbAppId='237...';
 $fbPageName='LaravelCommunity';
 
-$data = Request::getPageFeed($fbPageName, $fbSecretKey, $fbAppId);
+$data = fb_feed()->setAppId($fbAppId)->setSecretKey($fbSecretKey)->setPage($fbPageName)->findKeyword("#JomPAY")->fetch();
 
 header('Content-type: application/json');
 echo json_encode($data);
+
 ```
 
 Then, you should getting data similarly like below:

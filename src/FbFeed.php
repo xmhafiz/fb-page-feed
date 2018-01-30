@@ -7,7 +7,6 @@
 namespace Xmhafiz\FbFeed;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\TransferStats;
 
 class FbFeed {
 
