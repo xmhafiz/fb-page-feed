@@ -27,12 +27,9 @@ class RequestTest extends TestCase
 		}
 
 		// set page
-//		$this->fbSecretKey =  getenv('FB_SECRET_KEY');
-//		$this->fbAppId = getenv('FB_APP_ID');
-//		$this->fbPageName = getenv('FB_PAGENAME');
-        $this->fbSecretKey =  $_SERVER['FB_SECRET_KEY'];
-        $this->fbAppId = $_SERVER['FB_APP_ID'];
-        $this->fbPageName = $_SERVER['FB_PAGENAME'];
+		$this->fbSecretKey =  getenv('FB_SECRET_KEY');
+		$this->fbAppId = getenv('FB_APP_ID');
+		$this->fbPageName = getenv('FB_PAGENAME');
 	}
 
 	function testGetPageFeedSuccess() 
