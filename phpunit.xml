@@ -13,4 +13,9 @@
 			<directory suffix=".php">./vendor</directory>
 		</blacklist>
 	</filter>
+	<php>
+		<env name="FB_SECRET_KEY" value="qF7zyzAVLcyp8-Eom290CPCNhK8"/>
+		<env name="FB_APP_ID" value="2105456293021633"/>
+		<env name="FB_PAGENAME" value="airselangor"/>
+	</php>
 </phpunit>

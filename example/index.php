@@ -9,8 +9,6 @@
 require_once __DIR__ .'/../vendor/autoload.php';
 
 use Dotenv\Dotenv;
-use Xmhafiz\FbFeed\Request;
-
 
 // load envirionment variable
 // add this package in your composer.json if want to use dotenv "vlucas/phpdotenv"
@@ -22,8 +20,8 @@ $fbSecretKey =  getenv('FB_SECRET_KEY');
 $fbAppId = getenv('FB_APP_ID');
 $fbPageName = getenv('FB_PAGENAME');
 
-$response = Request::getPageFeed($fbPageName, $fbSecretKey, $fbAppId);
+$response = fb_feed()->setAppId($fbAppId)->setSecretKey($fbSecretKey)->setPage($fbPageName)->findKeyword("#JomPAY")->fetch();
 
 header('Content-type: application/json');
-echo json_encode($response);
+echo json_encode($response, JSON_PRETTY_PRINT);
         

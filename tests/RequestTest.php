@@ -13,7 +13,7 @@ use Xmhafiz\FbFeed\Request;
 class RequestTest extends TestCase
 {
 	protected $fbPageName;
-	protected $fbPageId;
+	protected $fbAppId;
 	protected $fbSecretKey;
 
 	protected function setUp() 
@@ -27,15 +27,19 @@ class RequestTest extends TestCase
 		}
 
 		// set page
-		$this->fbSecretKey =  $_SERVER['FB_SECRET_KEY'];
-		$this->fbAppId = $_SERVER['FB_APP_ID'];
-		$this->fbPageName = $_SERVER['FB_PAGENAME'];
+		$this->fbSecretKey =  getenv('FB_SECRET_KEY');
+		$this->fbAppId = getenv('FB_APP_ID');
+		$this->fbPageName = getenv('FB_PAGENAME');
 	}
 
 	function testGetPageFeedSuccess() 
 	{
 		// check default feed request
-		$response = Request::getPageFeed($this->fbPageName, $this->fbSecretKey, $this->fbAppId);
+		$response = fb_feed()
+            ->setAppId($this->fbAppId)
+            ->setSecretKey($this->fbSecretKey)
+            ->setPage($this->fbPageName)
+            ->fetch();
 
 	    $this->assertFalse($response['error']);
 	    $this->assertEquals(200, $response['status_code']);
@@ -44,7 +48,12 @@ class RequestTest extends TestCase
 	function testGetPageFeedLimitFivePost() 
 	{
 		// feed request with maximum 5 post
-		$response = Request::getPageFeed($this->fbPageName, $this->fbSecretKey, $this->fbAppId, 5);
+        $response = fb_feed()
+            ->setAppId($this->fbAppId)
+            ->setSecretKey($this->fbSecretKey)
+            ->setPage($this->fbPageName)
+            ->feedLimit(5)
+            ->fetch();
 
 	    $this->assertFalse($response['error']);
 	    $this->assertEquals(5, count($response['data']));
@@ -53,9 +62,27 @@ class RequestTest extends TestCase
 	function testGetPageFeedEmptyPageNameFailed() 
 	{
 		// make pagename empty
-		$response = Request::getPageFeed($this->fbPageName, $this->fbSecretKey, '');
+        $response = fb_feed()
+            ->setAppId($this->fbAppId)
+            ->setSecretKey($this->fbSecretKey)
+            ->setPage(null)
+            ->fetch();
 
 	    $this->assertTrue($response['error']);
 	    $this->assertEquals(500, $response['status_code']);
 	}
+
+    function testGetPageFeedByKeywordSuccess()
+    {
+        // make pagename empty
+        $response = fb_feed()
+            ->setAppId($this->fbAppId)
+            ->setSecretKey($this->fbSecretKey)
+            ->setPage($this->fbPageName)
+            ->findKeyword("#AirSelangor")
+            ->fetch();
+
+        $this->assertTrue(true);
+        $this->assertEquals(200, $response['status_code']);
+    }
 }
