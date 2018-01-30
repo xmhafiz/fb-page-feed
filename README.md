@@ -1,7 +1,7 @@
 # Get Facebook Page Feed 
 
-[![Build Status](https://travis-ci.org/xmhafiz/fb-page-feed.svg?branch=master)](https://travis-ci.org/xmhafiz/fb-page-feed)
-[![Coverage](https://img.shields.io/codecov/c/github/xmhafiz/fb-page-feed.svg)](https://codecov.io/gh/xmhafiz/fb-page-feed)
+[![Build Status](https://travis-ci.org/afiqiqmal/fb-page-feed.svg?branch=master)](https://travis-ci.org/afiqiqmal/fb-page-feed)
+[![Coverage](https://img.shields.io/codecov/c/github/afiqiqmal/fb-page-feed.svg)](https://codecov.io/gh/afiqiqmal/fb-page-feed)
 
 It is simple wrapper class written in php to fetch posts from certain Facebook page.
 
