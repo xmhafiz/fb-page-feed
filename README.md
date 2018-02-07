@@ -38,7 +38,6 @@ After installing, you need to require Composer's autoloader and add your code.
 
 #### Default (maximum post is 20)
 ```php
-$data = Request::getPageFeed($pageName, $fbSecretKey, $fbAppId);
 $data = fb_feed()->setAppId($fbAppId)
         ->setSecretKey($fbSecretKey)
         ->setPage($fbPageName)
