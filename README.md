@@ -82,8 +82,6 @@ $data = fb_feed()->setAppId($fbAppId)
 
 require_once 'vendor/autoload.php';
 
-use Xmhafiz\FbFeed\Request;
-
 $fbSecretKey='580c7...';
 $fbAppId='237...';
 $fbPageName='LaravelCommunity';
