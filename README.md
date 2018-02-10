@@ -78,6 +78,8 @@ $data = fb_feed()->setAppId($fbAppId)
 
 ## Code Example
 
+Change the `$fbSecretKey` and `$fbAppId` based on the "App ID" and "App Secret" in Step 1
+
 ```php
 <?php
 
