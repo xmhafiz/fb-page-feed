@@ -38,7 +38,6 @@ After installing, you need to require Composer's autoloader and add your code.
 
 #### Default (maximum post is 20)
 ```php
-$data = Request::getPageFeed($pageName, $fbSecretKey, $fbAppId);
 $data = fb_feed()->setAppId($fbAppId)
         ->setSecretKey($fbSecretKey)
         ->setPage($fbPageName)
@@ -84,8 +83,6 @@ Change the `$fbSecretKey` and `$fbAppId` based on the "App ID" and "App Secret" 
 <?php
 
 require_once 'vendor/autoload.php';
-
-use Xmhafiz\FbFeed\Request;
 
 $fbSecretKey='580c7...';
 $fbAppId='237...';
