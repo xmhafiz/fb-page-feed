@@ -36,7 +36,7 @@ Alternatively, you can specify as a dependency in your project's existing compos
 ## Usage
 After installing, you need to require Composer's autoloader and add your code.
 
-#### Default (maximum post is 20)
+#### Default (maximum post is 100)
 ```php
 $data = fb_feed()->setAppId($fbAppId)
         ->setSecretKey($fbSecretKey)
@@ -88,14 +88,80 @@ $fbSecretKey='580c7...';
 $fbAppId='237...';
 $fbPageName='LaravelCommunity';
 
-$data = fb_feed()->setAppId($fbAppId)->setSecretKey($fbSecretKey)->setPage($fbPageName)->findKeyword("#JomPAY")->fetch();
+$response = fb_feed()->setAppId($fbAppId)->setSecretKey($fbSecretKey)->setPage($fbPageName)->findKeyword("#AirSelangor")->fetch();
+
+//or
+
+$response = fb_feed()->setCredential($fbAppId, $fbSecretKey)->setPage($fbPageName)->findKeyword("#AirSelangor")->fetch();
 
 header('Content-type: application/json');
 echo json_encode($data);
 
 ```
 
-Then, you should getting data similarly like below:
+#### Using ENV
+
+```
+FB_SECRET_KEY=absbo123o233213
+FB_APP_ID=123123123123
+FB_PAGENAME=pagename
+
+```
+
+Then, Just
+
+```
+$response = fb_feed()->findKeyword("#AirSelangor")->fetch();
+```
+
+
+### Method
+<table border="1">
+    <tr>
+        <th>Method</th>
+        <th>Param</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>setAppId</td>
+        <td><code>String</code></td>
+        <td>FB Application ID (Default is in .env)</td>
+    </tr>
+    <tr>
+        <td>setSecretKey</td>
+        <td><code>String</code></td>
+        <td>FB Application Secret ID (Default is in .env)</td>
+    </tr>
+    <tr>
+        <td>setCredential</td>
+        <td><code>String, String</code></td>
+        <td>Set Both Secret and App Id (Default is in .env)</td>
+    </tr>
+    <tr>
+        <td>fields</td>
+        <td><code>String</code></td>
+        <td>List of Attributes (Default : <code>id,message,created_time,from,permalink_url,full_picture</code>)</td>
+    </tr>
+    <tr>
+        <td>setPage</td>
+        <td><code>String</code></td>
+        <td>Set Page Name (Default is in .env)</td>
+    </tr>
+    <tr>
+        <td>findKeyword</td>
+        <td><code>String | Array</code></td>
+        <td>Filter String by certain Keywords</td>
+    </tr>
+    <tr>
+        <td>feedLimit</td>
+        <td><code>Integer</code></td>
+        <td>Set result count limit</td>
+    </tr>
+</table>
+
+### Result
+
+You should getting data similarly like below:
 ```json
 {
     "error": false,
