@@ -32,6 +32,29 @@ class RequestTest extends TestCase
 		$this->fbPageName = getenv('FB_PAGENAME');
 	}
 
+    function testGetPageFeedWithoutEnv()
+    {
+        // check default feed request
+        $response = fb_feed()
+            ->fetch();
+
+        $this->assertFalse($response['error']);
+        $this->assertEquals(200, $response['status_code']);
+    }
+
+    function testGetPageFeedWithEnv()
+    {
+        // check default feed request
+        $response = fb_feed()
+            ->setAppId($this->fbAppId)
+            ->setSecretKey($this->fbSecretKey)
+            ->setPage($this->fbPageName)
+            ->fetch();
+
+        $this->assertFalse($response['error']);
+        $this->assertEquals(200, $response['status_code']);
+    }
+
 	function testGetPageFeedSuccess() 
 	{
 		// check default feed request
@@ -44,6 +67,18 @@ class RequestTest extends TestCase
 	    $this->assertFalse($response['error']);
 	    $this->assertEquals(200, $response['status_code']);
 	}
+
+    function testGetPageFeedUsingConstructorSuccess()
+    {
+        // check default feed request
+        $response = fb_feed()
+            ->setCredential($this->fbAppId, $this->fbSecretKey)
+            ->setPage($this->fbPageName)
+            ->fetch();
+
+        $this->assertFalse($response['error']);
+        $this->assertEquals(200, $response['status_code']);
+    }
 
 	function testGetPageFeedLimitFivePost() 
 	{
@@ -80,6 +115,31 @@ class RequestTest extends TestCase
             ->setSecretKey($this->fbSecretKey)
             ->setPage($this->fbPageName)
             ->findKeyword("#AirSelangor")
+            ->fetch();
+
+        $this->assertTrue(true);
+        $this->assertEquals(200, $response['status_code']);
+    }
+
+    function testGetPageFeedByKeywordArraySuccess()
+    {
+        // make pagename empty
+        $response = fb_feed()
+            ->setAppId($this->fbAppId)
+            ->setSecretKey($this->fbSecretKey)
+            ->setPage($this->fbPageName)
+            ->findKeyword(['#AirSelangor', '#JimatAir'])
+            ->fetch();
+
+        $this->assertTrue(true);
+        $this->assertEquals(200, $response['status_code']);
+    }
+
+    function testGetPageFeedByKeywordWihtoutEnvSuccess()
+    {
+        // make pagename empty
+        $response = fb_feed()
+            ->findKeyword(['#AirSelangor', '#JimatAir'])
             ->fetch();
 
         $this->assertTrue(true);

@@ -20,7 +20,13 @@ $fbSecretKey =  getenv('FB_SECRET_KEY');
 $fbAppId = getenv('FB_APP_ID');
 $fbPageName = getenv('FB_PAGENAME');
 
-$response = fb_feed()->setAppId($fbAppId)->setSecretKey($fbSecretKey)->setPage($fbPageName)->findKeyword("#JomPAY")->fetch();
+$response = fb_feed()->setAppId($fbAppId)->setSecretKey($fbSecretKey)->setPage($fbPageName)->findKeyword("#AirSelangor")->fetch();
+//or
+$response = fb_feed()->setCredential($fbAppId, $fbSecretKey)->setPage($fbPageName)->findKeyword("#AirSelangor")->fetch();
+//or
+$response = fb_feed()->findKeyword("#AirSelangor")->fetch();
+//or
+$response = fb_feed()->findKeyword(['#AirSelangor', '#SEAGames'])->fetch();
 
 header('Content-type: application/json');
 echo json_encode($response, JSON_PRETTY_PRINT);
