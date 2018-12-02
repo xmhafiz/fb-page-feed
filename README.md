@@ -206,8 +206,5 @@ You should getting data similarly like below:
 - Look at [example code](https://github.com/xmhafiz/fb-page-feed/blob/master/example/index.php)
 - copy the `env.example` file to `.env` and make sure fill all the required environment variable
 
-## Todo
-- flexible query fields
-
 ## License
 Licensed under the [MIT license](http://opensource.org/licenses/MIT)
