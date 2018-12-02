@@ -60,7 +60,7 @@ $data = fb_feed()->setAppId($fbAppId)
 $data = fb_feed()->setAppId($fbAppId)
         ->setSecretKey($fbSecretKey)
         ->setPage($fbPageName)
-        ->findKeyword("#JomPay")
+        ->findKeyword("#LaravelCommunity")
         ->fetch();
 ```
 
@@ -88,11 +88,11 @@ $fbSecretKey='580c7...';
 $fbAppId='237...';
 $fbPageName='LaravelCommunity';
 
-$response = fb_feed()->setAppId($fbAppId)->setSecretKey($fbSecretKey)->setPage($fbPageName)->findKeyword("#AirSelangor")->fetch();
+$response = fb_feed()->setAppId($fbAppId)->setSecretKey($fbSecretKey)->setPage($fbPageName)->findKeyword("#tutorial")->fetch();
 
 //or
 
-$response = fb_feed()->setCredential($fbAppId, $fbSecretKey)->setPage($fbPageName)->findKeyword("#AirSelangor")->fetch();
+$response = fb_feed()->setCredential($fbAppId, $fbSecretKey)->setPage($fbPageName)->findKeyword("#tutorial")->fetch();
 
 header('Content-type: application/json');
 echo json_encode($data);
@@ -204,7 +204,7 @@ You should getting data similarly like below:
 
 ## To use with **dotenv** 
 - Look at [example code](https://github.com/xmhafiz/fb-page-feed/blob/master/example/index.php)
-- copy the `env.example` file to `.env` and make sure fill all the required environment variable
+- copy the `env.example` file to `.env` and make sure fill all the required environment variable (`FB_SECRET_KEY`, `FB_APP_ID`, `FB_PAGENAME`)
 
 ## License
 Licensed under the [MIT license](http://opensource.org/licenses/MIT)
