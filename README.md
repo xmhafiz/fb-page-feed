@@ -74,6 +74,16 @@ $data = fb_feed()->setAppId($fbAppId)
         ->fetch();
 ```
 
+#### To get owner's fb page feed using userAccessToken
+
+Details to get `userAccessToken` can refer [here](https://github.com/xmhafiz/fb-page-feed/pull/7).
+
+```php
+$data = fb_feed()
+        ->setAccessToken($userAccessToken)
+        ->setPage($fbPageName)
+        ->fetch();
+```
 
 ## Code Example
 

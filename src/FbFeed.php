@@ -30,7 +30,6 @@ class FbFeed {
         $this->access_token = getenv('FB_ACCESS_TOKEN');
     }
 
-
     /**
      * @param $app_id
      * @return $this
@@ -115,11 +114,11 @@ class FbFeed {
             return $this->returnFailed('Page Name is needed');
         }
 
-        if (!$this->app_id&&!$this->access_token) {
+        if (!$this->app_id &&! $this->access_token) {
             return $this->returnFailed('Facebook App ID is needed. Please refer to https://developers.facebook.com');
         }
 
-        if (!$this->secret_key&&!$this->access_token) {
+        if (!$this->secret_key &&! $this->access_token) {
             return $this->returnFailed('Facebook Secret Key is needed. Please refer to https://developers.facebook.com');
         }
         
