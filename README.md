@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/xmhafiz/fb-page-feed.svg?branch=master)](https://travis-ci.org/xmhafiz/fb-page-feed)
 [![Coverage](https://img.shields.io/codecov/c/github/xmhafiz/fb-page-feed.svg)](https://codecov.io/gh/xmhafiz/fb-page-feed)
+[![Packagist](https://img.shields.io/packagist/dt/xmhafiz/fb-page-feed.svg)](https://packagist.org/packages/xmhafiz/fb-page-feed)
 
 It is simple wrapper class written in php to fetch posts from certain Facebook page.
 
