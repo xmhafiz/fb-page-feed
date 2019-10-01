@@ -19,6 +19,7 @@ class FbFeed {
     private $locale = null;
     private $limit = 100; // all of it
     private $fields = 'id,message,created_time,from,permalink_url,full_picture';
+    private $access_token = null;
 
     /**
      * FbFeed constructor.
@@ -28,15 +29,14 @@ class FbFeed {
         $this->secret_key =  getenv('FB_SECRET_KEY');
         $this->app_id = getenv('FB_APP_ID');
         $this->page_name = getenv('FB_PAGENAME');
+        $this->access_token = getenv('FB_ACCESS_TOKEN');
     }
-
-
+  
     public static function init()
     {
         return new FbFeed();
     }
-
-
+  
     /**
      * @param $app_id
      * @return $this
@@ -63,6 +63,15 @@ class FbFeed {
      */
     function setSecretKey ($secret_key) {
         $this->secret_key = $secret_key;
+        return $this;
+    }
+    
+    /**
+     * @param $access_token
+     * @return $this
+     */
+    function setAccessToken ($access_token) {
+        $this->access_token = $access_token;
         return $this;
     }
 
@@ -121,16 +130,16 @@ class FbFeed {
             return $this->returnFailed('Page Name is needed');
         }
 
-        if (!$this->app_id) {
+        if (!$this->app_id &&! $this->access_token) {
             return $this->returnFailed('Facebook App ID is needed. Please refer to https://developers.facebook.com');
         }
 
-        if (!$this->secret_key) {
+        if (!$this->secret_key &&! $this->access_token) {
             return $this->returnFailed('Facebook Secret Key is needed. Please refer to https://developers.facebook.com');
         }
-
+        
         // this is how to construct access token using secret key and app id
-        $accessToken = $this->app_id . '|' . $this->secret_key;
+        $accessToken = $this->access_token ? $this->access_token : $this->app_id . '|' . $this->secret_key;
 
         // make request as stated in https://developers.facebook.com/docs/graph-api/using-graph-api
         $url = 'https://graph.facebook.com/' . $this->page_name . '/feed';

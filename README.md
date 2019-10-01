@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/xmhafiz/fb-page-feed.svg?branch=master)](https://travis-ci.org/xmhafiz/fb-page-feed)
 [![Coverage](https://img.shields.io/codecov/c/github/xmhafiz/fb-page-feed.svg)](https://codecov.io/gh/xmhafiz/fb-page-feed)
+[![Packagist](https://img.shields.io/packagist/dt/xmhafiz/fb-page-feed.svg)](https://packagist.org/packages/xmhafiz/fb-page-feed)
 
 It is simple wrapper class written in php to fetch posts from certain Facebook page.
 
@@ -60,7 +61,7 @@ $data = fb_feed()->setAppId($fbAppId)
 $data = fb_feed()->setAppId($fbAppId)
         ->setSecretKey($fbSecretKey)
         ->setPage($fbPageName)
-        ->findKeyword("#JomPay")
+        ->findKeyword("#LaravelCommunity")
         ->fetch();
 ```
 
@@ -74,6 +75,16 @@ $data = fb_feed()->setAppId($fbAppId)
         ->fetch();
 ```
 
+#### To get owner's fb page feed using userAccessToken
+
+Details to get `userAccessToken` can refer [here](https://github.com/xmhafiz/fb-page-feed/pull/7).
+
+```php
+$data = fb_feed()
+        ->setAccessToken($userAccessToken)
+        ->setPage($fbPageName)
+        ->fetch();
+```
 
 ## Code Example
 
@@ -88,11 +99,11 @@ $fbSecretKey='580c7...';
 $fbAppId='237...';
 $fbPageName='LaravelCommunity';
 
-$response = fb_feed()->setAppId($fbAppId)->setSecretKey($fbSecretKey)->setPage($fbPageName)->findKeyword("#AirSelangor")->fetch();
+$response = fb_feed()->setAppId($fbAppId)->setSecretKey($fbSecretKey)->setPage($fbPageName)->findKeyword("#tutorial")->fetch();
 
 //or
 
-$response = fb_feed()->setCredential($fbAppId, $fbSecretKey)->setPage($fbPageName)->findKeyword("#AirSelangor")->fetch();
+$response = fb_feed()->setCredential($fbAppId, $fbSecretKey)->setPage($fbPageName)->findKeyword("#tutorial")->fetch();
 
 header('Content-type: application/json');
 echo json_encode($data);
@@ -204,10 +215,7 @@ You should getting data similarly like below:
 
 ## To use with **dotenv** 
 - Look at [example code](https://github.com/xmhafiz/fb-page-feed/blob/master/example/index.php)
-- copy the `env.example` file to `.env` and make sure fill all the required environment variable
-
-## Todo
-- flexible query fields
+- copy the `env.example` file to `.env` and make sure fill all the required environment variable (`FB_SECRET_KEY`, `FB_APP_ID`, `FB_PAGENAME`)
 
 ## License
 Licensed under the [MIT license](http://opensource.org/licenses/MIT)
