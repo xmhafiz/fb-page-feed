@@ -213,6 +213,9 @@ You should getting data similarly like below:
 }
 ```
 
+## Notes
+To use 'Page Public Content Access', your use of this endpoint must be reviewed and approved by Facebook. To submit this 'Page Public Content Access' feature for review please read our documentation on reviewable features: https://developers.facebook.com/docs/apps/review.
+
 ## To use with **dotenv** 
 - Look at [example code](https://github.com/xmhafiz/fb-page-feed/blob/master/example/index.php)
 - copy the `env.example` file to `.env` and make sure fill all the required environment variable (`FB_SECRET_KEY`, `FB_APP_ID`, `FB_PAGENAME`)
