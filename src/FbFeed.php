@@ -7,6 +7,7 @@
 namespace Xmhafiz\FbFeed;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 
 class FbFeed {
@@ -15,6 +16,7 @@ class FbFeed {
     private $secret_key = null;
     private $page_name = null;
     private $keyword = null;
+    private $locale = null;
     private $limit = 100; // all of it
     private $fields = 'id,message,created_time,from,permalink_url,full_picture';
     private $access_token = null;
@@ -29,7 +31,12 @@ class FbFeed {
         $this->page_name = getenv('FB_PAGENAME');
         $this->access_token = getenv('FB_ACCESS_TOKEN');
     }
-
+  
+    public static function init()
+    {
+        return new FbFeed();
+    }
+  
     /**
      * @param $app_id
      * @return $this
@@ -105,6 +112,15 @@ class FbFeed {
     }
 
     /**
+     * @param $locale
+     * @return $this
+     */
+    function setLocale($locale) {
+        $this->locale = $locale;
+        return $this;
+    }
+
+    /**
      * @return array
      */
     function fetch() {
@@ -130,8 +146,7 @@ class FbFeed {
 
         // error handler when status code not 200
         try {
-            $test = null;
-            $query = [ 
+            $query = [
                 'query' => [
                     'access_token' => $accessToken,
                     'fields' => $this->fields,
@@ -142,11 +157,14 @@ class FbFeed {
                 $query['query']['limit'] = $this->limit;
             }
 
+            if ($this->locale) {
+                $query['query']['locale'] = $this->locale;
+            }
+
             // start request
-            $response = $client->request('GET', $url, $query);
+            $response = $client->get($url, $query);
 
             $json = $response->getBody();
-
             if ($response->getStatusCode() == 200) {
 
                 $dataArray = json_decode($json, true);
@@ -175,10 +193,8 @@ class FbFeed {
                 return $this->returnFailed('Unable to fetch. Client Error', $response->getStatusCode());
             }
         }
-        catch (\Exception $e) {
-            return $this->returnFailed($e->getMessage());
-        } catch (GuzzleException $e) {
-            return $this->returnFailed($e->getMessage());
+       catch (ClientException $e) {
+            return $this->returnFailed(json_decode($e->getResponse()->getBody()->getContents())->error);
         }
     }
 
@@ -194,7 +210,7 @@ class FbFeed {
         return [
             'error' => true,
             'status_code' => $code,
-            'message' => ($message) ? $message : 'Unexpecetd error occurred'
+            'message' => ($message) ? $message : 'Unexpected error occurred'
         ];
     }
 
