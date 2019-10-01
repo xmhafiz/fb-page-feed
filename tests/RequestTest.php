@@ -37,9 +37,11 @@ class RequestTest extends TestCase
         // check default feed request
         $response = fb_feed()
             ->fetch();
-
-        $this->assertFalse($response['error']);
-        $this->assertEquals(200, $response['status_code']);
+        // check if got 500 caused by fb Apps dont have approval
+        if (isAppsApproved($response)) {
+            $this->assertFalse($response['error']);
+            $this->assertEquals(200, $response['status_code']);
+        }
     }
 
     function testGetPageFeedWithEnv()
@@ -51,8 +53,10 @@ class RequestTest extends TestCase
             ->setPage($this->fbPageName)
             ->fetch();
 
-        $this->assertFalse($response['error']);
-        $this->assertEquals(200, $response['status_code']);
+        if (isAppsApproved($response)) {
+            $this->assertFalse($response['error']);
+            $this->assertEquals(200, $response['status_code']);
+        }
     }
 
 	function testGetPageFeedSuccess() 
@@ -64,8 +68,10 @@ class RequestTest extends TestCase
             ->setPage($this->fbPageName)
             ->fetch();
 
-	    $this->assertFalse($response['error']);
-	    $this->assertEquals(200, $response['status_code']);
+        if (isAppsApproved($response)) {
+            $this->assertFalse($response['error']);
+            $this->assertEquals(200, $response['status_code']);
+        }
 	}
 
     function testGetPageFeedUsingConstructorSuccess()
@@ -76,8 +82,10 @@ class RequestTest extends TestCase
             ->setPage($this->fbPageName)
             ->fetch();
 
-        $this->assertFalse($response['error']);
-        $this->assertEquals(200, $response['status_code']);
+        if (isAppsApproved($response)) {
+            $this->assertFalse($response['error']);
+            $this->assertEquals(200, $response['status_code']);
+        }
     }
 
 	function testGetPageFeedLimitFivePost() 
@@ -90,8 +98,10 @@ class RequestTest extends TestCase
             ->feedLimit(5)
             ->fetch();
 
-	    $this->assertFalse($response['error']);
-	    $this->assertEquals(5, count($response['data']));
+        if (isAppsApproved($response)) {
+            $this->assertFalse($response['error']);
+            $this->assertEquals(5, count($response['data']));
+        }
 	}
 
 	function testGetPageFeedEmptyPageNameFailed() 
@@ -103,46 +113,54 @@ class RequestTest extends TestCase
             ->setPage(null)
             ->fetch();
 
-	    $this->assertTrue($response['error']);
-	    $this->assertEquals(500, $response['status_code']);
+        if (isAppsApproved($response)) {
+            $this->assertTrue($response['error']);
+            $this->assertEquals(500, $response['status_code']);
+        }
 	}
 
     function testGetPageFeedByKeywordSuccess()
     {
-        // make pagename empty
+        // by keyword
         $response = fb_feed()
             ->setAppId($this->fbAppId)
             ->setSecretKey($this->fbSecretKey)
             ->setPage($this->fbPageName)
-            ->findKeyword("#AirSelangor")
+            ->findKeyword("#tutorial")
             ->fetch();
 
-        $this->assertTrue(true);
-        $this->assertEquals(200, $response['status_code']);
+        if (isAppsApproved($response)) {
+            $this->assertTrue(true);
+            $this->assertEquals(200, $response['status_code']);
+        }
     }
 
     function testGetPageFeedByKeywordArraySuccess()
     {
-        // make pagename empty
+        // by array of keywords
         $response = fb_feed()
             ->setAppId($this->fbAppId)
             ->setSecretKey($this->fbSecretKey)
             ->setPage($this->fbPageName)
-            ->findKeyword(['#AirSelangor', '#JimatAir'])
+            ->findKeyword(['#tutorial', '#laravel'])
             ->fetch();
 
-        $this->assertTrue(true);
-        $this->assertEquals(200, $response['status_code']);
+        if (isAppsApproved($response)) {
+            $this->assertTrue(true);
+            $this->assertEquals(200, $response['status_code']);
+        }
     }
 
     function testGetPageFeedByKeywordWihtoutEnvSuccess()
     {
-        // make pagename empty
+        // by array of keywords without env
         $response = fb_feed()
-            ->findKeyword(['#AirSelangor', '#JimatAir'])
+            ->findKeyword(['#tutorial', '#laravel'])
             ->fetch();
 
-        $this->assertTrue(true);
-        $this->assertEquals(200, $response['status_code']);
+        if (isAppsApproved($response)) {
+            $this->assertTrue(true);
+            $this->assertEquals(200, $response['status_code']);
+        }
     }
 }
