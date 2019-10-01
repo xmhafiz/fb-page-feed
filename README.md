@@ -8,10 +8,10 @@ It is simple wrapper class written in php to fetch posts from certain Facebook p
 
 Currently I am using [Facebook graph API](https://developers.facebook.com/docs/graph-api) with cool [guzzle](https://github.com/guzzle/guzzle) and [dotenv](https://github.com/vlucas/phpdotenv)
 
-Tested in PHP 5.6, 7.0 and 7.1
+Tested in PHP 7.0 and 7.1
 
 ## Requirement
-- PHP 5.6+
+- PHP 7.0+
 
 ## Installation
 
