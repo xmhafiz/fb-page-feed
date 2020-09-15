@@ -33,7 +33,7 @@ $response = fb_feed()->findKeyword("#tutorial")->fetch();
 $response = fb_feed()->findKeyword(['#tutorial', '#tips'])->fetch();
 
 // Example 5 - to fetch owner's pages only. Apps review not required
-$response = fb_feed()->setAccessToken($accessToken)->fetch();
+$response = fb_feed()->setAccessToken($accessToken)->setModule("posts")->fetch();
 
 // Example 6
 $response = fb_feed()->fetch();

@@ -20,6 +20,7 @@ class FbFeed {
     private $limit = 100; // all of it
     private $fields = 'id,message,created_time,from,permalink_url,full_picture';
     private $access_token = null;
+    private $module = 'posts';
 
     /**
      * FbFeed constructor.
@@ -94,6 +95,15 @@ class FbFeed {
     }
 
     /**
+     * @param string $module
+     */
+    public function setModule(string $module)
+    {
+        $this->module = $module;
+        return $this;
+    }
+
+    /**
      * @param $keyword
      * @return $this
      */
@@ -142,7 +152,7 @@ class FbFeed {
         $accessToken = $this->access_token ? $this->access_token : $this->app_id . '|' . $this->secret_key;
 
         // make request as stated in https://developers.facebook.com/docs/graph-api/using-graph-api
-        $url = 'https://graph.facebook.com/' . $this->page_name . '/feed';
+        $url = "https://graph.facebook.com/{$this->page_name}/{$this->module}";
 
         // error handler when status code not 200
         try {
