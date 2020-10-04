@@ -23,22 +23,23 @@ class FbFeed {
 
     /**
      * FbFeed constructor.
+     * @param null $config
      */
-    public function __construct()
+    public function __construct($config = null)
     {
-        $this->secret_key =  getenv('FB_SECRET_KEY');
-        $this->app_id = getenv('FB_APP_ID');
-        $this->page_name = getenv('FB_PAGENAME');
-        $this->access_token = getenv('FB_ACCESS_TOKEN');
+        $this->secret_key = $config['secret_key'] ?? getenv('FB_SECRET_KEY');
+        $this->app_id = $config['app_id'] ??  getenv('FB_APP_ID');
+        $this->page_name = $config['page_name'] ??  getenv('FB_PAGENAME');
+        $this->access_token = $config['access_token'] ??  getenv('FB_ACCESS_TOKEN');
 
         $this->headers = [
             'accept' => 'application/json'
         ];
     }
   
-    public static function make()
+    public static function make($config = null)
     {
-        return new self;
+        return new self($config);
     }
   
     /**
