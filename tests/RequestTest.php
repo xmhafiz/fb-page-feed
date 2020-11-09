@@ -37,8 +37,9 @@ class RequestTest extends TestCase
         // check default feed request
         $response = fb_feed()
             ->fetch();
+
         // check if got 500 caused by fb Apps dont have approval
-        if (isAppsApproved($response)) {
+        if ($this->isAppsApproved($response)) {
             $this->assertFalse($response['error']);
             $this->assertEquals(200, $response['status_code']);
         }
@@ -53,7 +54,7 @@ class RequestTest extends TestCase
             ->setPage($this->fbPageName)
             ->fetch();
 
-        if (isAppsApproved($response)) {
+        if ($this->isAppsApproved($response)) {
             $this->assertFalse($response['error']);
             $this->assertEquals(200, $response['status_code']);
         }
@@ -68,7 +69,7 @@ class RequestTest extends TestCase
             ->setPage($this->fbPageName)
             ->fetch();
 
-        if (isAppsApproved($response)) {
+        if ($this->isAppsApproved($response)) {
             $this->assertFalse($response['error']);
             $this->assertEquals(200, $response['status_code']);
         }
@@ -82,7 +83,7 @@ class RequestTest extends TestCase
             ->setPage($this->fbPageName)
             ->fetch();
 
-        if (isAppsApproved($response)) {
+        if ($this->isAppsApproved($response)) {
             $this->assertFalse($response['error']);
             $this->assertEquals(200, $response['status_code']);
         }
@@ -98,7 +99,7 @@ class RequestTest extends TestCase
             ->feedLimit(5)
             ->fetch();
 
-        if (isAppsApproved($response)) {
+        if ($this->isAppsApproved($response)) {
             $this->assertFalse($response['error']);
             $this->assertEquals(5, count($response['data']));
         }
@@ -113,7 +114,7 @@ class RequestTest extends TestCase
             ->setPage(null)
             ->fetch();
 
-        if (isAppsApproved($response)) {
+        if ($this->isAppsApproved($response)) {
             $this->assertTrue($response['error']);
             $this->assertEquals(500, $response['status_code']);
         }
@@ -129,7 +130,7 @@ class RequestTest extends TestCase
             ->findKeyword("#tutorial")
             ->fetch();
 
-        if (isAppsApproved($response)) {
+        if ($this->isAppsApproved($response)) {
             $this->assertTrue(true);
             $this->assertEquals(200, $response['status_code']);
         }
@@ -145,7 +146,7 @@ class RequestTest extends TestCase
             ->findKeyword(['#tutorial', '#laravel'])
             ->fetch();
 
-        if (isAppsApproved($response)) {
+        if ($this->isAppsApproved($response)) {
             $this->assertTrue(true);
             $this->assertEquals(200, $response['status_code']);
         }
@@ -158,9 +159,24 @@ class RequestTest extends TestCase
             ->findKeyword(['#tutorial', '#laravel'])
             ->fetch();
 
-        if (isAppsApproved($response)) {
+        if ($this->isAppsApproved($response)) {
             $this->assertTrue(true);
             $this->assertEquals(200, $response['status_code']);
         }
+    }
+
+    private function isAppsApproved($response)
+    {
+        // check if got 500 caused by fb Apps dont have approval
+        $fbErrorMessage = ['Page Public Content Access', 'app secret proof or an app token', 'This endpoint requires'];
+        if ($response['status_code'] != 200) {
+            foreach ($fbErrorMessage as $needle) {
+                if (stripos(strtolower($response['message']), strtolower($needle)) !== false) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }

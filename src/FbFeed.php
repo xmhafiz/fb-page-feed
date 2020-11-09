@@ -6,20 +6,19 @@
  */
 namespace Xmhafiz\FbFeed;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\GuzzleException;
+use Zttp\Zttp;
 
 class FbFeed {
 
-    private $app_id = null;
-    private $secret_key = null;
-    private $page_name = null;
+    private $app_id;
+    private $secret_key;
+    private $page_name;
+    private $headers;
     private $keyword = null;
     private $locale = null;
     private $limit = 100; // all of it
     private $fields = 'id,message,created_time,from,permalink_url,full_picture';
-    private $access_token = null;
+    private $access_token;
     private $module = 'posts';
 
     /**
@@ -31,18 +30,23 @@ class FbFeed {
         $this->app_id = getenv('FB_APP_ID');
         $this->page_name = getenv('FB_PAGENAME');
         $this->access_token = getenv('FB_ACCESS_TOKEN');
+
+        $this->headers = [
+            'accept' => 'application/json'
+        ];
     }
   
-    public static function init()
+    public static function make()
     {
-        return new FbFeed();
+        return new self;
     }
   
     /**
      * @param $app_id
-     * @return $this
+     * @return FbFeed
      */
-    function setAppId($app_id) {
+    function setAppId($app_id) : FbFeed
+    {
         $this->app_id = $app_id;
         return $this;
     }
@@ -50,9 +54,10 @@ class FbFeed {
     /**
      * @param $app_id
      * @param $secret_key
-     * @return $this
+     * @return FbFeed
      */
-    function setCredential($app_id, $secret_key) {
+    function setCredential($app_id, $secret_key)  : FbFeed
+    {
         $this->app_id = $app_id;
         $this->secret_key = $secret_key;
         return $this;
@@ -60,44 +65,62 @@ class FbFeed {
 
     /**
      * @param $secret_key
-     * @return $this
+     * @return FbFeed
      */
-    function setSecretKey ($secret_key) {
+    function setSecretKey ($secret_key)  : FbFeed
+    {
         $this->secret_key = $secret_key;
         return $this;
     }
     
     /**
      * @param $access_token
-     * @return $this
+     * @return FbFeed
      */
-    function setAccessToken ($access_token) {
+    function setAccessToken ($access_token) : FbFeed
+    {
         $this->access_token = $access_token;
         return $this;
     }
 
     /**
-     * @param $fields
-     * @return $this
+     * @param string[] $headers
+     * @return FbFeed;
      */
-    function fields($fields) {
+    public function setHeaders(array $headers) : FbFeed
+    {
+        $this->headers = $headers;
+        return $this;
+    }
+
+    /**
+     * @param $fields
+     * @return FbFeed
+     */
+    function fields($fields)  : FbFeed
+    {
+        if (is_array($fields)) {
+            $fields = join(",", $fields);
+        }
         $this->fields = $fields;
         return $this;
     }
 
     /**
      * @param $page_name
-     * @return $this
+     * @return FbFeed
      */
-    function setPage($page_name) {
+    function setPage($page_name)  : FbFeed
+    {
         $this->page_name = $page_name;
         return $this;
     }
 
     /**
      * @param string $module
+     * @return FbFeed
      */
-    public function setModule(string $module)
+    public function setModule(string $module) : FbFeed
     {
         $this->module = $module;
         return $this;
@@ -105,27 +128,30 @@ class FbFeed {
 
     /**
      * @param $keyword
-     * @return $this
+     * @return FbFeed
      */
-    function findKeyword($keyword) {
+    function findKeyword($keyword)  : FbFeed
+    {
         $this->keyword = $keyword;
         return $this;
     }
 
     /**
      * @param int $total
-     * @return $this
+     * @return FbFeed
      */
-    function feedLimit($total = 20) {
+    function feedLimit($total = 20)  : FbFeed
+    {
         $this->limit = $total;
         return $this;
     }
 
     /**
      * @param $locale
-     * @return $this
+     * @return FbFeed
      */
-    function setLocale($locale) {
+    function setLocale($locale)  : FbFeed
+    {
         $this->locale = $locale;
         return $this;
     }
@@ -134,7 +160,6 @@ class FbFeed {
      * @return array
      */
     function fetch() {
-        $client = new Client();
 
         if (!$this->page_name) {
             return $this->returnFailed('Page Name is needed');
@@ -147,65 +172,54 @@ class FbFeed {
         if (!$this->secret_key &&! $this->access_token) {
             return $this->returnFailed('Facebook Secret Key is needed. Please refer to https://developers.facebook.com');
         }
-        
-        // this is how to construct access token using secret key and app id
-        $accessToken = $this->access_token ? $this->access_token : $this->app_id . '|' . $this->secret_key;
 
-        // make request as stated in https://developers.facebook.com/docs/graph-api/using-graph-api
-        $url = "https://graph.facebook.com/{$this->page_name}/{$this->module}";
+        $data = [
+            'access_token' => $this->getTokenKey(),
+            'fields' => $this->fields,
+        ];
 
-        // error handler when status code not 200
-        try {
-            $query = [
-                'query' => [
-                    'access_token' => $accessToken,
-                    'fields' => $this->fields,
-                ]
-            ];
+        if ($this->limit > -1) {
+            $data['limit'] = $this->limit;
+        }
 
-            if ($this->limit > -1) {
-                $query['query']['limit'] = $this->limit;
-            }
+        if ($this->locale) {
+            $data['locale'] = $this->locale;
+        }
 
-            if ($this->locale) {
-                $query['query']['locale'] = $this->locale;
-            }
 
-            // start request
-            $response = $client->get($url, $query);
+        // start request
+        $response = Zttp::withHeaders($this->headers)
+            ->get("https://graph.facebook.com/{$this->page_name}/{$this->module}", $data);
 
-            $json = $response->getBody();
-            if ($response->getStatusCode() == 200) {
+        if ($response->isOk()) {
 
-                $dataArray = json_decode($json, true);
+            $feeds = $response->json()['data'];
 
-                // reformat data
-                $feeds = $dataArray['data'];
-
-                if ($this->keyword) {
-                    $newFeeds = [];
-                    foreach ($feeds as $feed) {
-                        if (isset($feed['message'])) {
-                            if (!is_array($this->keyword) && stripos($feed['message'], $this->keyword) !== false) {
-                                $newFeeds[] = $feed;
-                            } elseif (is_array($this->keyword) && $this->contains($this->keyword, $feed['message'])) {
-                                $newFeeds[] = $feed;
-                            }
+            if ($this->keyword) {
+                $newFeeds = [];
+                foreach ($feeds as $feed) {
+                    if (isset($feed['message'])) {
+                        if (!is_array($this->keyword) && stripos($feed['message'], $this->keyword) !== false) {
+                            $newFeeds[] = $feed;
+                        } elseif (is_array($this->keyword) && $this->contains($this->keyword, $feed['message'])) {
+                            $newFeeds[] = $feed;
                         }
                     }
-
-                    $feeds = $newFeeds;
                 }
 
-                return $this->returnSuccess($feeds);
+                $feeds = $newFeeds;
             }
-            else {
-                return $this->returnFailed('Unable to fetch. Client Error', $response->getStatusCode());
-            }
+
+            return $this->returnSuccess($feeds);
+
+        } else {
+            return $this->returnFailed($response->json(), $response->status());
         }
-       catch (ClientException $e) {
-            return $this->returnFailed(json_decode($e->getResponse()->getBody()->getContents())->error);
-        }
+    }
+
+    private function getTokenKey()
+    {
+        return $this->access_token ?? ($this->app_id . '|' . $this->secret_key);
     }
 
     private function returnSuccess($feeds = null, $code = 200) {
@@ -220,7 +234,7 @@ class FbFeed {
         return [
             'error' => true,
             'status_code' => $code,
-            'message' => ($message) ? $message : 'Unexpected error occurred'
+            'message' => ($message) ? $message['error']['message'] ?? $message : 'Unexpected error occurred'
         ];
     }
 

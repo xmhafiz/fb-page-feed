@@ -45,6 +45,15 @@ $data = fb_feed()->setAppId($fbAppId)
         ->fetch();
 ```
 
+#### Set Module
+```php
+$data = fb_feed()->setAppId($fbAppId)
+        ->setSecretKey($fbSecretKey)
+        ->setPage($fbPageName)
+        ->setModule("feeds")
+        ->fetch();
+```
+
 #### Custom Maximum Post Shown
 ```php
 // only show 5 post maximum
@@ -71,7 +80,8 @@ $data = fb_feed()->setAppId($fbAppId)
 $data = fb_feed()->setAppId($fbAppId)
         ->setSecretKey($fbSecretKey)
         ->setPage($fbPageName)
-        ->fields("id,message") //default 'id,message,created_time'
+        ->fields("id,message") //default 'id,message,created_time' 
+        ->fields(["id","message"]) // can be array
         ->fetch();
 ```
 

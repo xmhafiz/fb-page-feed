@@ -22,21 +22,26 @@ $fbPageName = getenv('FB_PAGENAME');
 $accessToken = getenv('FB_ACCESS_TOKEN');
 
 // Example 1
-$response = fb_feed()->setAppId($fbAppId)->setSecretKey($fbSecretKey)->setPage($fbPageName)->findKeyword("#tutorial")->fetch();
+//$response = fb_feed()->setAppId($fbAppId)->setSecretKey($fbSecretKey)->setPage($fbPageName)->findKeyword("#tutorial")->fetch();
 // Example 2
-$response = fb_feed()->setCredential($fbAppId, $fbSecretKey)->setPage($fbPageName)->findKeyword("#tutorial")->fetch();
+//$response = fb_feed()->setCredential($fbAppId, $fbSecretKey)->setPage($fbPageName)->findKeyword("#tutorial")->fetch();
 
 // Example 3
-$response = fb_feed()->findKeyword("#tutorial")->fetch();
+//$response = fb_feed()->findKeyword("#tutorial")->fetch();
 
 // Example 4
-$response = fb_feed()->findKeyword(['#tutorial', '#tips'])->fetch();
+//$response = fb_feed()->findKeyword(['#tutorial', '#tips'])->fetch();
 
 // Example 5 - to fetch owner's pages only. Apps review not required
-$response = fb_feed()->setAccessToken($accessToken)->setModule("posts")->fetch();
+$response = fb_feed()
+    ->setAccessToken($accessToken)
+    ->setPage("yourpage")
+    ->setModule("posts")
+    ->fields(["id","message","created_time","from","permalink_url","full_picture"])
+    ->fetch();
 
 // Example 6
-$response = fb_feed()->fetch();
+//$response = fb_feed()->fetch();
 
 header('Content-type: application/json');
 echo json_encode($response, JSON_PRETTY_PRINT);
