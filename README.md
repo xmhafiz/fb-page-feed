@@ -37,6 +37,26 @@ Alternatively, you can specify as a dependency in your project's existing compos
 ## Usage
 After installing, you need to require Composer's autoloader and add your code.
 
+```php
+$data = fb_feed()->setAppId($fbAppId)
+        ->setSecretKey($fbSecretKey)
+        ->setPage($fbPageName)
+        ->fetch();
+
+$data = fb_feed()->fetch(); // must have .env
+
+$config = [
+    'secret_key' => '',
+    'app_id' => '',
+    'page_name' => '',
+    'access_token' => '',
+];
+$data = fb_feed($config)->fetch();
+$data = FbFeed::make($config)->fetch();
+
+```
+
+
 #### Default (maximum post is 100)
 ```php
 $data = fb_feed()->setAppId($fbAppId)
