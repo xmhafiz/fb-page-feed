@@ -6,7 +6,8 @@
  */
 namespace Xmhafiz\FbFeed;
 
-use Zttp\Zttp;
+
+use GuzzleHttp\Client;
 
 class FbFeed {
 
@@ -57,10 +58,15 @@ class FbFeed {
      * @param $secret_key
      * @return FbFeed
      */
-    function setCredential($app_id, $secret_key)  : FbFeed
+    function setCredential($app_id, $secret_key = null)  : FbFeed
     {
-        $this->app_id = $app_id;
-        $this->secret_key = $secret_key;
+        if ($secret_key != null) {
+            $this->app_id = $app_id;
+            $this->secret_key = $secret_key;
+        } else {
+            $this->access_token = $app_id;
+        }
+
         return $this;
     }
 
@@ -187,14 +193,17 @@ class FbFeed {
             $data['locale'] = $this->locale;
         }
 
+        $client = new Client();
 
         // start request
-        $response = Zttp::withHeaders($this->headers)
-            ->get("https://graph.facebook.com/{$this->page_name}/{$this->module}", $data);
+        $response = $client->request('GET', "https://graph.facebook.com/{$this->page_name}/{$this->module}", [
+            'query' => $data,
+            'headers' => $this->headers
+        ]);
 
-        if ($response->isOk()) {
+        if ($response->getStatusCode() >= 200  && $response->getStatusCode() < 300) {
 
-            $feeds = $response->json()['data'];
+            $feeds = json_decode($response->getBody(), true)['data'];
 
             if ($this->keyword) {
                 $newFeeds = [];
