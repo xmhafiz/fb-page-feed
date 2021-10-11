@@ -5,7 +5,6 @@ require_once __DIR__ .'/../vendor/autoload.php';
 
 use Dotenv\Dotenv;
 use PHPUnit\Framework\TestCase;
-use Xmhafiz\FbFeed\Request;
 /**
 * RequestTest.php
 * to test function in Request class
@@ -13,10 +12,9 @@ use Xmhafiz\FbFeed\Request;
 class RequestTest extends TestCase
 {
 	protected $fbPageName;
-	protected $fbAppId;
-	protected $fbSecretKey;
+	protected $fbAccessToken;
 
-	protected function setUp() 
+	protected function setUp() :void
 	{
 		try {
 			$env = new Dotenv(__DIR__ . '/../');
@@ -27,8 +25,7 @@ class RequestTest extends TestCase
 		}
 
 		// set page
-		$this->fbSecretKey =  getenv('FB_SECRET_KEY');
-		$this->fbAppId = getenv('FB_APP_ID');
+        $this->fbAccessToken = getenv('FB_ACCESS_TOKEN');
 		$this->fbPageName = getenv('FB_PAGENAME');
 	}
 
@@ -49,8 +46,7 @@ class RequestTest extends TestCase
     {
         // check default feed request
         $response = fb_feed()
-            ->setAppId($this->fbAppId)
-            ->setSecretKey($this->fbSecretKey)
+            ->setAccessToken($this->fbAccessToken)
             ->setPage($this->fbPageName)
             ->fetch();
 
@@ -64,8 +60,7 @@ class RequestTest extends TestCase
 	{
 		// check default feed request
 		$response = fb_feed()
-            ->setAppId($this->fbAppId)
-            ->setSecretKey($this->fbSecretKey)
+            ->setAccessToken($this->fbAccessToken)
             ->setPage($this->fbPageName)
             ->fetch();
 
@@ -79,7 +74,7 @@ class RequestTest extends TestCase
     {
         // check default feed request
         $response = fb_feed()
-            ->setCredential($this->fbAppId, $this->fbSecretKey)
+            ->setCredential($this->fbAccessToken)
             ->setPage($this->fbPageName)
             ->fetch();
 
@@ -93,8 +88,7 @@ class RequestTest extends TestCase
 	{
 		// feed request with maximum 5 post
         $response = fb_feed()
-            ->setAppId($this->fbAppId)
-            ->setSecretKey($this->fbSecretKey)
+            ->setAccessToken($this->fbAccessToken)
             ->setPage($this->fbPageName)
             ->feedLimit(5)
             ->fetch();
@@ -109,8 +103,7 @@ class RequestTest extends TestCase
 	{
 		// make pagename empty
         $response = fb_feed()
-            ->setAppId($this->fbAppId)
-            ->setSecretKey($this->fbSecretKey)
+            ->setAccessToken($this->fbAccessToken)
             ->setPage(null)
             ->fetch();
 
@@ -124,8 +117,7 @@ class RequestTest extends TestCase
     {
         // by keyword
         $response = fb_feed()
-            ->setAppId($this->fbAppId)
-            ->setSecretKey($this->fbSecretKey)
+            ->setAccessToken($this->fbAccessToken)
             ->setPage($this->fbPageName)
             ->findKeyword("#tutorial")
             ->fetch();
@@ -140,8 +132,7 @@ class RequestTest extends TestCase
     {
         // by array of keywords
         $response = fb_feed()
-            ->setAppId($this->fbAppId)
-            ->setSecretKey($this->fbSecretKey)
+            ->setAccessToken($this->fbAccessToken)
             ->setPage($this->fbPageName)
             ->findKeyword(['#tutorial', '#laravel'])
             ->fetch();
