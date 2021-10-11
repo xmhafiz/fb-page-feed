@@ -29,7 +29,7 @@ Alternatively, you can specify as a dependency in your project's existing compos
 ```
 {
    "require": {
-      "xmhafiz/fb-page-feed": "^1.1"
+      "xmhafiz/fb-page-feed": "^1.2"
    }
 }
 ```
